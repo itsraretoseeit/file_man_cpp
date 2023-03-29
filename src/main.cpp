@@ -49,14 +49,19 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    if(instruction.compare("move_rename") == 0) {
+    if(instruction.compare("move") == 0) {
         auto original_path = fs::path(argv[2]);
         if(!fs::exists(original_path)) {
             std::cout << "Original file does not exist. Nothing to move/rename." << std::endl;
             return 1;
         }
         auto desired_path = fs::path(argv[3]);
-        fs::rename(original_path, desired_path);
+        std::error_code err;
+        fs::rename(original_path, desired_path, err);
+        if(err) {
+            std::cout << "Error in move: " << err.message() << std::endl;
+            return 1;
+        }
         return 0;
     }
 
@@ -97,6 +102,25 @@ int main(int argc, char *argv[]) {
             return 1;
         }
         return 0;
+    }
+
+    if(instruction.compare("move_dir") == 0) {
+        auto original_path = fs::path(argv[2]);
+        if(!fs::exists(original_path)) {
+            std::cout << "Path does not exist." << std::endl;
+            return 1;
+        } 
+        auto desired_path = fs::path(argv[3]);
+
+        std::error_code err;
+        fs::rename(original_path, desired_path, err);
+
+        if (err) {
+            std::cout << "Error in rename: " << err.message() << std::endl;
+            return 1;
+        }
+        return 0;
+
     }    
 
     std::cout << "not recognized" << std::endl;
