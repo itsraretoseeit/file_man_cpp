@@ -27,13 +27,14 @@ int main(int argc, char *argv[]) {
 
 
     auto instruction = std::string(argv[1]);
+    //FILE
     if(instruction.compare("print_summary") == 0) {
         auto path = fs::path(argv[2]);
         print_summary(path);
         return 0;
     }
     
-    if(instruction.compare("compare") == 0) {
+    if(instruction.compare("copy") == 0) {
         auto original_file = fs::path(argv[2]);
         if (!fs::exists(original_file)) {
             std::cout << "Original file does not exist. Nothing to copy." << std::endl;
@@ -72,6 +73,31 @@ int main(int argc, char *argv[]) {
         }
         return 0;
     }
+
+    //DIR
+    if(instruction.compare("create_dir") == 0) {
+        auto path = fs::path(argv[2]);
+        auto success = fs::create_directory(path);
+        if (!success) {
+            std::cout << "Failed to create a dir." << std::endl;
+            return 1;
+        }
+        return 0;
+    }
+
+    if(instruction.compare("delete_dir") == 0) {
+        auto path = fs::path(argv[2]);
+        if(!fs::exists(path)) {
+            std::cout << "Path does not exist." << std::endl;
+            return 1;
+        }
+        auto success = fs::remove(path);
+        if (!success) {
+            std::cout << "Failed to delete a dir." << std::endl;
+            return 1;
+        }
+        return 0;
+    }    
 
     std::cout << "not recognized" << std::endl;
     return 0;
