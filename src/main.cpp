@@ -1,5 +1,6 @@
 #include <iostream>
 #include <filesystem>
+#include <FileManagerFile.h>
 
 namespace fs = std::filesystem;
 
@@ -35,48 +36,18 @@ int main(int argc, char *argv[]) {
     }
     
     if(instruction.compare("copy") == 0) {
-        auto original_file = fs::path(argv[2]);
-        if (!fs::exists(original_file)) {
-            std::cout << "Original file does not exist. Nothing to copy." << std::endl;
-            return 1;
-        }
-        auto copied_file = fs::path(argv[3]);
-        auto success = fs::copy_file(original_file, copied_file);
-        if (!success) {
-            std::cout << "Failed to copy." << std::endl;
-            return 1;
-        }
-        return 0;
+        FileManagerFile fmf{argv[2]};
+        return fmf.copy(argv[3]);
     }
 
     if(instruction.compare("move") == 0) {
-        auto original_path = fs::path(argv[2]);
-        if(!fs::exists(original_path)) {
-            std::cout << "Original file does not exist. Nothing to move/rename." << std::endl;
-            return 1;
-        }
-        auto desired_path = fs::path(argv[3]);
-        std::error_code err;
-        fs::rename(original_path, desired_path, err);
-        if(err) {
-            std::cout << "Error in move: " << err.message() << std::endl;
-            return 1;
-        }
-        return 0;
+        FileManagerFile fmf{argv[2]};
+        return fmf.move(argv[3]);
     }
 
     if(instruction.compare("delete") == 0) {
-        auto original_path = fs::path(argv[2]);
-        if(!fs::exists(original_path)) {
-            std::cout << "File does not exist. Nothing to delete." << std::endl;
-            return 1;
-        }
-        auto success = fs::remove(original_path);
-        if (!success) {
-            std::cout << "Failed to delete." << std::endl;
-            return 1;
-        }
-        return 0;
+        FileManagerFile fmf{argv[2]};
+        return fmf.remove();
     }
 
     //DIR
