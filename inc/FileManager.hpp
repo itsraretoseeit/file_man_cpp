@@ -6,7 +6,7 @@
 class FileManager {
 
 public:
-    virtual ~FileManager();
+    virtual ~FileManager(){};
 
     virtual int create() = 0;
     virtual int copy(std::filesystem::path dst) = 0;
