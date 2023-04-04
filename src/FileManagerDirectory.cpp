@@ -1,18 +1,18 @@
-#include "FileManagerFile.hpp"
+#include "FileManagerDirectory.hpp"
 
 
 namespace fs = std::filesystem;
 
-FileManagerFile::FileManagerFile(fs::path src) : FileManager(src) {
+FileManagerDirectory::FileManagerDirectory(fs::path src) : FileManager(src) {
     //constructor
 };
 
-FileManagerFile::FileManagerFile(char *path[]) : FileManager(*path) {
+FileManagerDirectory::FileManagerDirectory(char *path[]) : FileManager(*path) {
     //constructor
 };
 
 
-int FileManagerFile::remove() {
+int FileManagerDirectory::remove() {
     if(!fs::exists(this->m_path)) {
         return 1;
     }
@@ -23,7 +23,7 @@ int FileManagerFile::remove() {
     return 0;
 }
 
-int FileManagerFile::copy(fs::path dst) {
+int FileManagerDirectory::copy(fs::path dst) {
     if(!fs::exists(this->m_path)) {
         return 1;
     }
@@ -34,7 +34,7 @@ int FileManagerFile::copy(fs::path dst) {
     return 0;
 }
 
-int FileManagerFile::move(fs::path dst) {
+int FileManagerDirectory::move(fs::path dst) {
     if(!fs::exists(this->m_path)) {
         return 1;
     }
@@ -46,6 +46,13 @@ int FileManagerFile::move(fs::path dst) {
     return 0;
 }
 
-int FileManagerFile::create() {
+int FileManagerDirectory::create() {
+    if(fs::exists(this->m_path)) {
+        return 1;
+    }
+    auto success = fs::create_directory(this->m_path);
+    if(!success) {
+        return 1;
+    }
     return 0;
 }

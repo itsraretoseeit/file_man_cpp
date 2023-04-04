@@ -4,6 +4,11 @@ project(FileManager)
 
 
 include_directories(inc)
-add_executable(FileManager src/main.cpp src/FileManagerFile.cpp)
+add_executable(FileManager
+    src/main.cpp 
+    src/FileManagerFile.cpp
+    src/FileManagerDirectory.cpp
+)
+
 
 set_property(TARGET FileManager PROPERTY CXX_STANDARD 17)
