@@ -1,9 +1,6 @@
 #include <iostream>
-#include <filesystem>
 #include "FileManagerFile.hpp"
 #include "FileManagerDirectory.hpp"
-
-namespace fs = std::filesystem;
 
 int main(int argc, char *argv[]) {
 
@@ -16,7 +13,7 @@ int main(int argc, char *argv[]) {
     //FILE
     if(instruction.compare("print_summary") == 0) {
         FileManagerFile fmf{argv[2]};
-        std::cout << fmf.summary().str();
+        std::cout << fmf.summary();
         return 0;
     }
     

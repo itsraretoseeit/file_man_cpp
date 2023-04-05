@@ -4,6 +4,7 @@
 #include "FileManager.hpp"
 #include <filesystem>
 #include <string>
+#include <fstream>
 
 class FileManagerFile : public FileManager {
     public:

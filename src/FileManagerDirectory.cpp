@@ -56,3 +56,11 @@ int FileManagerDirectory::create() {
     }
     return 0;
 }
+
+std::string FileManagerDirectory::list() {
+    std::stringstream ss;
+    for(auto entry : fs::directory_iterator(m_path)) {
+        ss << entry.path() << "\n";
+    }
+    return ss.str();
+}

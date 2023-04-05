@@ -15,7 +15,7 @@ public:
     virtual int move(std::filesystem::path dst) = 0;
     virtual int remove() = 0;
 
-    virtual std::stringstream summary() {
+    virtual std::string summary() {
         std::stringstream ss;
         ss  << "Path summary: " << "\n"
             << "root: " << m_path.root_name() << "\n"
@@ -27,7 +27,7 @@ public:
             << "stem: " << m_path.stem() << "\n"
             << "extension: " << m_path.extension() << "\n"
             << "is absolute: " << m_path.is_absolute() << "\n";
-        return ss;
+        return ss.str();
     }
 
 private:

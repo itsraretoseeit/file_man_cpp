@@ -47,5 +47,10 @@ int FileManagerFile::move(fs::path dst) {
 }
 
 int FileManagerFile::create() {
+    std::ofstream outfile{m_path};
+    outfile.close();
+    if(!fs::exists(m_path)) {
+        return 1;
+    }
     return 0;
 }

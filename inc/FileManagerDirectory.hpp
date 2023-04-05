@@ -15,6 +15,7 @@ class FileManagerDirectory : public FileManager {
         int move(std::filesystem::path dst) override;
         int copy(std::filesystem::path dst) override;
 
+        std::string list();
     private:
         std::filesystem::path m_path;
 };
